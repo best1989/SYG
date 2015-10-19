@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.ContentResolver;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
@@ -274,13 +275,17 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                     public void done(ParseUser user, ParseException e) {
                         if (user != null) {
                             // Hooray! The user is logged in.
-                            Toast.makeText(getBaseContext(),ParseUser.getCurrentUser().toString()+" se conecto...",Toast.LENGTH_LONG);
+                            Toast.makeText(getBaseContext(),mEmail+" se conecto...", Toast.LENGTH_LONG).show();
+                            Intent homeIntent = new Intent(getBaseContext(), Home.class);
+                            startActivity(homeIntent);
                         } else {
                             // Signup failed. Look at the ParseException to see what happened.
+
                         }
                     }
                 });
             } catch (Exception e) {
+                Toast.makeText(getBaseContext(),"Error: "+e.toString(),Toast.LENGTH_LONG).show();
                 return false;
             }
 
