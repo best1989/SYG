@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SYG</string>
+    <string name="profimg">profileIMG</string>
+    <string name="logodesc">appLogo</string>
 </resources>
