@@ -12,17 +12,19 @@
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:layout_gravity="center_horizontal"
-            android:background="@android:color/holo_blue_dark"
-            android:contentDescription="@string/profimg" />
+            android:src="@android:color/holo_blue_dark"
+            android:contentDescription="@string/profimg"
+            />
 
-        <ImageView
-            android:id="@+id/android"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:layout_gravity="center_horizontal"
-            android:contentDescription="@null" />
-        <!--android:src="@drawable/substracted_circle"-->
+    <!--<ImageView-->
+            <!--android:id="@+id/android"-->
+            <!--android:layout_width="160dp"-->
+            <!--android:layout_height="160dp"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:contentDescription="@null"/>-->
+         <!--android:src="@drawable/substracted_circle"-->
 
     </FrameLayout>
+
 
 </LinearLayout>
