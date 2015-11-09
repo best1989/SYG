@@ -24,7 +24,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".Home"
-            android:label="Inicio">
+                  android:label="Inicio">
+        </activity>
+        <activity android:name=".DetallePuntos"
+                  android:label="Detalle de Puntos">
         </activity>
     </application>
 

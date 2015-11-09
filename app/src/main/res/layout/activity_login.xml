@@ -18,13 +18,13 @@
             android:layout_height="wrap_content" android:orientation="vertical"
             android:layout_gravity="center">
 
-            <!--<ImageView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:id="@+id/imageView"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:src="@drawable/sg"-->
-                <!--android:contentDescription="@string/logodesc" />-->
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView"
+                android:layout_gravity="center"
+                android:src="@drawable/sg"
+                android:contentDescription="@string/logodesc" />
 
             <AutoCompleteTextView android:id="@+id/email" android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:hint="@string/prompt_email"
