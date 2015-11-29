@@ -1,9 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/text"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/table"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:padding="5sp"
-    android:textSize="25sp" >
+    android:layout_height="fill_parent">
 
-</TextView>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/descrip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5sp"
+            android:textSize="25sp"
+            android:text="Texto 1">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/points"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Texto 2"
+
+            android:layout_column="2"
+            android:layout_gravity="center_vertical" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/pdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5sp"
+            android:textSize="15sp"
+            android:text="El 21/Nov/2015 por Gabriel Guzman" />
+
+    </TableRow>
+
+</TableLayout>

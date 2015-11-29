@@ -5,16 +5,18 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_dark">
 
         <ImageView
             android:id="@+id/profile_picture"
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:layout_gravity="center_horizontal"
-            android:src="@android:color/holo_blue_dark"
             android:contentDescription="@string/profimg"
             />
+        <!--android:src="@android:color/holo_blue_dark"-->
+
 
     <!--<ImageView-->
             <!--android:id="@+id/android"-->

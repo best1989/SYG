@@ -27,6 +27,7 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,7 +38,7 @@ public class Home extends Activity {
     ListView listview;
     List<ParseObject> ob;
     ProgressDialog mProgressDialog;
-    ArrayAdapter<String> adapter;
+    ArrayList<Points> pArrayList;
 
     public static Bitmap getclip(Bitmap bitmap) {
         Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
@@ -91,15 +92,20 @@ public class Home extends Activity {
         protected void onPostExecute(Void result) {
             // Locate the listview in listview_main.xml
             listview = (ListView) findViewById(R.id.listView);
+            pArrayList = new ArrayList<>();
             // Pass the results into an ArrayAdapter
-            adapter = new ArrayAdapter<>(Home.this,
-                    R.layout.home_listview_item);
+
             // Retrieve object "name" from Parse.com database
+            Points pt;
             for (ParseObject puntos : ob) {
-                adapter.add((String) puntos.get("description"));
+                pt = new Points();
+                pt.setDescription((String) puntos.get("description"));
+                pt.setPoints(puntos.get("amount").toString());
+                pt.setPointsDate((String) puntos.get("giver"));
+                pArrayList.add(pt);
             }
             // Binds the Adapter to the ListView
-            listview.setAdapter(adapter);
+            listview.setAdapter(new PointsAdapter(Home.this, pArrayList));
             // Close the progressdialog
             mProgressDialog.dismiss();
             // Capture button clicks on ListView items
@@ -111,7 +117,7 @@ public class Home extends Activity {
                     Intent i = new Intent(Home.this,
                             DetallePuntos.class);
                     // Pass data "name" followed by the position
-                    i.putExtra("description", ob.get(position).getString("descripcion"));
+                    i.putExtra("description", listview.getItemAtPosition(position).toString());
                     // Open SingleItemView.java Activity
                     startActivity(i);
                 }

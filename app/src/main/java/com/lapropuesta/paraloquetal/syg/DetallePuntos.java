@@ -23,7 +23,7 @@ public class DetallePuntos extends Activity {
         Intent i = getIntent();
 
         // Get the name
-        name = i.getStringExtra("descripcion");
+        name = i.getStringExtra("description");
 
         // Locate the TextView in singleitemview.xml
         txtname = (TextView) findViewById(R.id.titulo);
