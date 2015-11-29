@@ -16,16 +16,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.parse.GetCallback;
 import com.parse.GetDataCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -139,7 +142,7 @@ public class Home extends Activity {
 
             public void done(ParseObject object, ParseException e) {
                 // Locate the column named "ImageName" and set the string
-                Toast.makeText(getBaseContext(),object.get("username").toString()+object.get("email").toString(),Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), object.get("username").toString() + object.get("email").toString(), Toast.LENGTH_LONG).show();
                 ParseFile fileObject = object.getParseFile("userimg");
 
                 fileObject.getDataInBackground(new GetDataCallback() {
@@ -158,5 +161,21 @@ public class Home extends Activity {
             }
         });
         new PointsDataTask().execute();
+
+        Button logoutBt = (Button) findViewById(R.id.logout_bt);
+
+        logoutBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logout();
+            }
+        });
+    }
+
+    private void logout(){
+        ParseUser.logOut();
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        this.finish();
     }
 }

@@ -15,6 +15,13 @@
             android:layout_gravity="center_horizontal"
             android:contentDescription="@string/profimg"
             />
+
+        <Button
+            android:id="@+id/logout_bt"
+            android:background="@drawable/logout_128"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_gravity="right|top" />
         <!--android:src="@android:color/holo_blue_dark"-->
 
 

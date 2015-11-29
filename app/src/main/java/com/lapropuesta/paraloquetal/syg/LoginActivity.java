@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -47,9 +48,16 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Enable Local Datastore.
-        Parse.enableLocalDatastore(this);
-        Parse.initialize(this, "pj27q68kqg9iV9mtZhLhNcZjKqgOW9z2JHqdG8OL", "KFqpMQPhS6UkTgUrBd04KziACwJwBxocjU8zoZTX");
+        ParseUser currentUser = ParseUser.getCurrentUser();
+
+        if (currentUser != null) {
+            // do stuff with the user
+            Log.e("user",currentUser.toString());
+            Intent homeIntent = new Intent(getBaseContext(), Home.class);
+            startActivity(homeIntent);
+        } else {
+            // show the signup or login screen
+
 
         // Set up the login form.
         mUserView = (AutoCompleteTextView) findViewById(R.id.user);
@@ -76,6 +84,7 @@ public class LoginActivity extends Activity {
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+    }
     }
 
     /**
