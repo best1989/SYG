@@ -95,10 +95,10 @@ public class Home extends Activity {
         protected void onPostExecute(Void result) {
             // Locate the listview in listview_main.xml
             listview = (ListView) findViewById(R.id.listView);
+            //Crea el array de tipo Points
             pArrayList = new ArrayList<>();
-            // Pass the results into an ArrayAdapter
 
-            // Retrieve object "name" from Parse.com database
+            // Obtiene los datos de cada registro de puntaje y los añade al array
             Points pt;
             for (ParseObject puntos : ob) {
                 pt = new Points();
@@ -116,12 +116,12 @@ public class Home extends Activity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view,
                                         int position, long id) {
-                    // Send single item click data to SingleItemView Class
+                    // Send single item click data to DetallePuntos Class
                     Intent i = new Intent(Home.this,
                             DetallePuntos.class);
-                    // Pass data "name" followed by the position
+                    // Pass data "description" followed by the position
                     i.putExtra("description", listview.getItemAtPosition(position).toString());
-                    // Open SingleItemView.java Activity
+                    // Open DetallePuntos.java Activity
                     startActivity(i);
                 }
             });
@@ -138,10 +138,11 @@ public class Home extends Activity {
         //query.fromLocalDatastore();
         // query.whereEqualTo("playerName", "Dan Stemkoski");
 
+        //TODO: Este query debe ir según el usuario logueado, por ahora está cableado
         query.getInBackground("72AJ7gyRc5", new GetCallback<ParseObject>() {
 
             public void done(ParseObject object, ParseException e) {
-                // Locate the column named "ImageName" and set the string
+                // Locate the column named "userimg" and set the string
                 Toast.makeText(getBaseContext(), object.get("username").toString() + object.get("email").toString(), Toast.LENGTH_LONG).show();
                 ParseFile fileObject = object.getParseFile("userimg");
 
@@ -151,7 +152,7 @@ public class Home extends Activity {
                             Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
                             // Get the ImageView from main.xml
                             ImageView image = (ImageView) findViewById(R.id.profile_picture);
-                            // Set the Bitmap into the ImageView
+                            // Set the Bitmap into the ImageView. El getclip es para que sea redonda
                             image.setImageBitmap(getclip(bmp));
                         } else {
                             ImageView image = (ImageView) findViewById(R.id.profile_picture);
@@ -162,8 +163,9 @@ public class Home extends Activity {
         });
         new PointsDataTask().execute();
 
+        //TODO: Este botón debería dentro de un menú, por ahora se muestra así dado que es la única opción
+        //Botón para cerrar sesión
         Button logoutBt = (Button) findViewById(R.id.logout_bt);
-
         logoutBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

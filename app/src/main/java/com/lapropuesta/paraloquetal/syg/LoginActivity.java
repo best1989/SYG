@@ -48,21 +48,23 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        /*
+         * Para mantener persistencia de sesión dentro de la aplicación, se comprueba si existe
+         * usuario de Parse en la BD local
+         */
         ParseUser currentUser = ParseUser.getCurrentUser();
 
         if (currentUser != null) {
-            // do stuff with the user
+            // Va directo al home sin tener que loguearse
             Log.e("user",currentUser.toString());
             Intent homeIntent = new Intent(getBaseContext(), Home.class);
             startActivity(homeIntent);
         } else {
-            // show the signup or login screen
-
 
         // Set up the login form.
         mUserView = (AutoCompleteTextView) findViewById(R.id.user);
-
         mPasswordView = (EditText) findViewById(R.id.password);
+
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
