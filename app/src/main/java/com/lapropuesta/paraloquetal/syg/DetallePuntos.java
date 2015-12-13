@@ -1,14 +1,15 @@
 package com.lapropuesta.paraloquetal.syg;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.widget.TextView;
+
 
 /**
  * Created by Gabriel on 08/11/2015.
  */
-public class DetallePuntos extends Activity {
+public class DetallePuntos extends FragmentActivity {
 
     TextView txtname;
     String name;
@@ -16,7 +17,7 @@ public class DetallePuntos extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Get the view from singleitemview.xml
+        // Get the view from detalle_puntos.xml
         setContentView(R.layout.detalle_puntos);
 
         // Retrieve data from MainActivity on item click event

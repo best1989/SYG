@@ -1,6 +1,5 @@
 package com.lapropuesta.paraloquetal.syg;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,10 +11,12 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -23,7 +24,6 @@ import android.widget.Toast;
 
 import com.parse.GetCallback;
 import com.parse.GetDataCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -36,12 +36,16 @@ import java.util.List;
 /**
  * Created by gguzman on 10/19/15.
  */
-public class Home extends Activity {
+public class Home extends FragmentActivity {
 
-    ListView listview;
-    List<ParseObject> ob;
+    ListView plistview;
+    ListView rwlistview;
+    List<ParseObject> pob;
+    List<ParseObject> rwob;
     ProgressDialog mProgressDialog;
     ArrayList<Points> pArrayList;
+    ArrayList<Rewards> rwArrayList;
+    ViewPager viewPager;
 
     public static Bitmap getclip(Bitmap bitmap) {
         Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
@@ -78,12 +82,18 @@ public class Home extends Activity {
 
         @Override
         protected Void doInBackground(Void... params) {
-            // Locate the class table named "Country" in Parse.com
-            ParseQuery<ParseObject> query = new ParseQuery<>(
+            // Locate the class table named "Points" in Parse.com
+            ParseQuery<ParseObject> pquery = new ParseQuery<>(
                     "Points");
-            query.orderByDescending("createdAt");
+            pquery.orderByDescending("createdAt");
+            // Locate the class table named "Rewards" in Parse.com
+            ParseQuery<ParseObject> rwquery = new ParseQuery<>(
+                    "Rewards");
+            rwquery.orderByDescending("createdAt");
+
             try {
-                ob = query.find();
+                pob = pquery.find();
+                rwob = rwquery.find();
             } catch (ParseException e) {
                 Log.e("Error", e.getMessage());
                 e.printStackTrace();
@@ -94,13 +104,15 @@ public class Home extends Activity {
         @Override
         protected void onPostExecute(Void result) {
             // Locate the listview in listview_main.xml
-            listview = (ListView) findViewById(R.id.listView);
+            plistview = (ListView) findViewById(R.id.PointsListView);
+            rwlistview = (ListView) findViewById(R.id.RewardsListView);
             //Crea el array de tipo Points
             pArrayList = new ArrayList<>();
+            rwArrayList = new ArrayList<>();
 
             // Obtiene los datos de cada registro de puntaje y los añade al array
             Points pt;
-            for (ParseObject puntos : ob) {
+            for (ParseObject puntos : pob) {
                 pt = new Points();
                 pt.setDescription((String) puntos.get("description"));
                 pt.setPoints(puntos.get("amount").toString());
@@ -108,11 +120,21 @@ public class Home extends Activity {
                 pArrayList.add(pt);
             }
             // Binds the Adapter to the ListView
-            listview.setAdapter(new PointsAdapter(Home.this, pArrayList));
+            plistview.setAdapter(new PointsAdapter(Home.this, pArrayList));
+
+            // Obtiene los datos de cada registro de premios y los añade al array
+            Rewards rw;
+            for (ParseObject premios : rwob) {
+                rw = new Rewards();
+                rw.setDescription((String) premios.get("description"));
+                rw.setPoints(premios.get("amount").toString());
+                rw.setPointsDate((String) premios.get("giver"));
+                rwArrayList.add(rw);
+            }
             // Close the progressdialog
             mProgressDialog.dismiss();
             // Capture button clicks on ListView items
-            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            plistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view,
                                         int position, long id) {
@@ -120,7 +142,7 @@ public class Home extends Activity {
                     Intent i = new Intent(Home.this,
                             DetallePuntos.class);
                     // Pass data "description" followed by the position
-                    i.putExtra("description", listview.getItemAtPosition(position).toString());
+                    i.putExtra("description", plistview.getItemAtPosition(position).toString());
                     // Open DetallePuntos.java Activity
                     startActivity(i);
                 }
@@ -128,11 +150,19 @@ public class Home extends Activity {
         }
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
+
+        // Get the ViewPager and set it's PagerAdapter so that it can display items
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager.setAdapter(new HomeFragmentPagerAdapter(getSupportFragmentManager(),
+                Home.this));
+
+        // Give the TabLayout the ViewPager
+        final TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
         //query.fromLocalDatastore();
@@ -161,6 +191,27 @@ public class Home extends Activity {
                 });
             }
         });
+        //TODO: Revisar esto, funciona pero debe poder hacerse mejor
+        //Listener añadido para permitir la carga del listview del segundo fragmento
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getPosition() == 1)
+                    rwlistview.setAdapter(new RewardsAdapter(Home.this, rwArrayList));
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
         new PointsDataTask().execute();
 
         //TODO: Este botón debería dentro de un menú, por ahora se muestra así dado que es la única opción

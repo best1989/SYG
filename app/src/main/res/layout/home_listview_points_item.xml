@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/table"
+    android:id="@+id/pointstable"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
@@ -9,7 +9,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/descrip"
+            android:id="@+id/pdescrip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5sp"
@@ -19,7 +19,7 @@
         </TextView>
 
         <TextView
-            android:id="@+id/points"
+            android:id="@+id/ppoints"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Texto 2"

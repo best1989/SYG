@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rewardstable"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/rwdescrip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5sp"
+            android:textSize="25sp"
+            android:text="Texto 1">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/rwpoints"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Texto 2"
+
+            android:layout_column="2"
+            android:layout_gravity="center_vertical" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/rwdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5sp"
+            android:textSize="15sp"
+            android:text="El 21/Nov/2015 por Gabriel Guzman" />
+
+    </TableRow>
+
+</TableLayout>

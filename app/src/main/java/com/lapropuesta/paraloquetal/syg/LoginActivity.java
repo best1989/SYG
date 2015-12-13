@@ -42,6 +42,7 @@ public class LoginActivity extends Activity {
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +78,7 @@ public class LoginActivity extends Activity {
         });
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+            mEmailSignInButton.requestFocus();
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -158,7 +160,7 @@ public class LoginActivity extends Activity {
             });
 
             // Create a progressdialog
-            ProgressDialog mProgressDialog = new ProgressDialog(LoginActivity.this);
+            mProgressDialog = new ProgressDialog(LoginActivity.this);
             // Set progressdialog title
             mProgressDialog.setTitle("Obteniendo datos");
             // Set progressdialog message
@@ -206,6 +208,7 @@ public class LoginActivity extends Activity {
                             // Hooray! The user is logged in.
                             Toast.makeText(getBaseContext(), mUser +" se conecto...", Toast.LENGTH_LONG).show();
                             Intent homeIntent = new Intent(getBaseContext(), Home.class);
+                            mProgressDialog.dismiss();
                             startActivity(homeIntent);
                         } else {
                             // Signup failed. Look at the ParseException to see what happened.

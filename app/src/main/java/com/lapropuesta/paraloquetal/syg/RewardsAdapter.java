@@ -1,7 +1,7 @@
 package com.lapropuesta.paraloquetal.syg;
 
 /**
- * Created by Gabriel on 29/11/2015.
+ * Created by Gabriel on 12/12/2015.
  */
 
 import java.util.ArrayList;
@@ -12,12 +12,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-public class PointsAdapter extends BaseAdapter {
-    private static ArrayList<Points> searchArrayList;
+public class RewardsAdapter extends BaseAdapter {
+    private static ArrayList<Rewards> searchArrayList;
 
     private LayoutInflater mInflater;
 
-    public PointsAdapter(Context context, ArrayList<Points> results) {
+    public RewardsAdapter(Context context, ArrayList<Rewards> results) {
         searchArrayList = results;
         mInflater = LayoutInflater.from(context);
     }
@@ -37,12 +37,12 @@ public class PointsAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.home_listview_points_item, null);
+            convertView = mInflater.inflate(R.layout.home_listview_rewards_item, null);
             holder = new ViewHolder();
-            holder.txtDescrip = (TextView) convertView.findViewById(R.id.pdescrip);
+            holder.txtDescrip = (TextView) convertView.findViewById(R.id.rwdescrip);
             holder.txtPoints = (TextView) convertView
-                    .findViewById(R.id.ppoints);
-            holder.txtPDate = (TextView) convertView.findViewById(R.id.pdate);
+                    .findViewById(R.id.rwpoints);
+            holder.txtPDate = (TextView) convertView.findViewById(R.id.rwdate);
 
             convertView.setTag(holder);
         } else {
