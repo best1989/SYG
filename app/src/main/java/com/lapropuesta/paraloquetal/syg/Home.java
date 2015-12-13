@@ -196,6 +196,7 @@ public class Home extends FragmentActivity {
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                //Si es la tab de premios, llena el listview correspondiente
                 if (tab.getPosition() == 1)
                     rwlistview.setAdapter(new RewardsAdapter(Home.this, rwArrayList));
                 viewPager.setCurrentItem(tab.getPosition());
