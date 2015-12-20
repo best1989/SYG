@@ -46,6 +46,7 @@ public class Home extends FragmentActivity {
     ArrayList<Points> pArrayList;
     ArrayList<Rewards> rwArrayList;
     ViewPager viewPager;
+    String userID = App.appUser;
 
     public static Bitmap getclip(Bitmap bitmap) {
         Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
@@ -85,10 +86,12 @@ public class Home extends FragmentActivity {
             // Locate the class table named "Points" in Parse.com
             ParseQuery<ParseObject> pquery = new ParseQuery<>(
                     "Points");
+            pquery.whereEqualTo("owner",userID);
             pquery.orderByDescending("createdAt");
             // Locate the class table named "Rewards" in Parse.com
             ParseQuery<ParseObject> rwquery = new ParseQuery<>(
                     "Rewards");
+            rwquery.whereEqualTo("owner",userID);
             rwquery.orderByDescending("createdAt");
 
             try {
@@ -168,8 +171,7 @@ public class Home extends FragmentActivity {
         //query.fromLocalDatastore();
         // query.whereEqualTo("playerName", "Dan Stemkoski");
 
-        //TODO: Este query debe ir según el usuario logueado, por ahora está cableado
-        query.getInBackground("72AJ7gyRc5", new GetCallback<ParseObject>() {
+        query.getInBackground(userID, new GetCallback<ParseObject>() {
 
             public void done(ParseObject object, ParseException e) {
                 // Locate the column named "userimg" and set the string

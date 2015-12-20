@@ -6,6 +6,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
 import android.os.Build;
@@ -23,7 +24,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.LogInCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
@@ -44,6 +44,26 @@ public class LoginActivity extends Activity {
     private View mLoginFormView;
     ProgressDialog mProgressDialog;
 
+    final String PREF_NAME = "StffStr";
+
+    //Almacena el objectID del usuario en persistencia
+    public void saveUserID(String objId){
+        // We need an Editor object to make preference changes.
+        // All objects are from android.context.Context
+        SharedPreferences settings = getSharedPreferences(PREF_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("objId", objId);
+
+        // Commit the edits!
+        editor.apply();
+    }
+    //Recupera el objectID del usuario
+    public String loadUserID(){
+        // Restore preferences
+        SharedPreferences settings = getSharedPreferences(PREF_NAME, 0);
+        return settings.getString("objId", "null");
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +77,7 @@ public class LoginActivity extends Activity {
 
         if (currentUser != null) {
             // Va directo al home sin tener que loguearse
+            App.appUser = loadUserID();
             Log.e("user",currentUser.toString());
             Intent homeIntent = new Intent(getBaseContext(), Home.class);
             startActivity(homeIntent);
@@ -206,6 +227,8 @@ public class LoginActivity extends Activity {
                     public void done(ParseUser user, ParseException e) {
                         if (user != null) {
                             // Hooray! The user is logged in.
+                            App.appUser = user.getObjectId();
+                            saveUserID(App.appUser);
                             Toast.makeText(getBaseContext(), mUser +" se conecto...", Toast.LENGTH_LONG).show();
                             Intent homeIntent = new Intent(getBaseContext(), Home.class);
                             mProgressDialog.dismiss();
